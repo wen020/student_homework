@@ -1,12 +1,16 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_session import Session
 
 db = SQLAlchemy()
 
 
 def create_app():
     app = Flask(__name__)
+    app.config["SESSION_PERMANENT"] = False
+    app.config["SESSION_TYPE"] = "filesystem"
+    Session(app)
     # cors = CORS(app, resources={r"/*": {"origins": "*"}})
     cors = CORS(app, supports_credentials=True,
                 resources={r"/*": {"origins": "*", "methods": ["PUT", "GET", "POST", "DELETE", "OPTIONS"],

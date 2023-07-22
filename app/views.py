@@ -3,11 +3,12 @@ from .models import User
 import json
 from . import db
 from . import responseCode
+from flask_session import Session
 
 views = Blueprint('views', __name__)
 
 
-@views.route('/user/login', methods=['POST', 'OPTIONS'])
+@views.route('/user/login', methods=['POST'])
 def login():
     try:
         data = request.get_data()
@@ -69,3 +70,12 @@ def register():
             message="INTERNAL_SERVER_ERROR!",
             data={},
         )
+
+class LoginStatus:
+    def __init__(self):
+        pass
+@views.route('/user/login/status', methods=['GET'])
+def GetStatus():
+    SESSION_USER_STATUS = "user_status"
+    if not Session.get(SESSION_USER_STATUS):
+        Session[SESSION_USER_STATUS] = LoginStatus()

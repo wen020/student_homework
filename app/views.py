@@ -13,7 +13,7 @@ def login():
   userId = data['userId']
   password = data['password']
   userType = data['userType']
-  answer = Teacher.query.filter_by(teacher_id=userId, password=password).first()
+  answer = Teacher.query.filter_by(id=userId, password=password).first()
   if answer is None:
     print('222')
     return Response(
@@ -23,7 +23,7 @@ def login():
   else:
     print(answer)
     return make_response(jsonify(
-      userId=answer.teacher_id,
+      userId=answer.id,
       username=answer.teacher_name,
       userType=2,
       loggedIn=True,

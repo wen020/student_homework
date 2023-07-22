@@ -83,7 +83,7 @@ def register():
 
 
 @views.route('/user/login/status', methods=['GET'])
-def GetStatus():
+def getStatus():
     status = session.get(SESSION_USER_STATUS)
     if not status:
         status = LoginStatus()
@@ -95,4 +95,13 @@ def GetStatus():
                       "username": status.username,
                       "userType": status.userType,
                       "loggedIn": status.loggedIn},
+    )
+
+@views.route('user/logout', methods=['GET'])
+def logout():
+    session[SESSION_USER_STATUS] = None
+    return jsonify(
+        code=responseCode.SUCCESS,
+        message="注销成功",
+        data={},
     )

@@ -27,7 +27,7 @@ class User(db.Model):
         self.Password = password
         self.IsLogin = isLogin
 
-class HomeWork(db.Model):
+class Homework(db.Model):
     __tablename__ = 'homeworks'
 
     HomeworkId = db.Column('homework_id', db.String(64), primary_key=True, doc='homework_id')
@@ -51,7 +51,7 @@ class StudentHomework(db.Model):
     StudentId = db.Column('student_id', db.String(64), doc='student_id')
     HomeworkId = db.Column('homework_id', db.String(128), doc='homework_id')
     Title = db.Column('title', db.String(1024), doc='title')
-    Content = db.Column('title', db.String(1024), doc='content')
+    Content = db.Column('content', db.String(1024), doc='content')
     TeacherComment = db.Column('teacher_comment', db.String(1024), doc='teacher_comment')
     Score = db.Column('score', db.Integer, doc='score', default=0)
     Appendix = db.Column('appendix', db.String(1024), doc='appendix')

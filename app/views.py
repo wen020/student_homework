@@ -27,7 +27,7 @@ def login():
         userId = data['userId']
         password = data['password']
         userType = data['userType']
-        answer = User.query.filter_by(UserId=userId, password=password, UserType=userType).first()
+        answer = User.query.filter_by(UserId=userId, Password=password, UserType=userType).first()
         if answer is None:
             return jsonify(
                 code=responseCode.FAIL,

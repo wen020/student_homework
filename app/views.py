@@ -92,7 +92,7 @@ def GetStatus():
         code=responseCode.SUCCESS,
         message="",
         data={"userId": status.userId,
-                      "username": status.userName,
+                      "username": status.username,
                       "userType": status.userType,
                       "loggedIn": status.loggedIn},
     )

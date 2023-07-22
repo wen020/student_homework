@@ -23,11 +23,10 @@ def login():
         data = request.get_data()
         print(data)
         data = json.loads(data)
-        print(data)
         userId = data['userId']
         password = data['password']
         userType = data['userType']
-        answer = User.query.filter_by(UserId=userId, Password=password, UserType=userType).first()
+        answer = User.query.filter_by(UserId=userId, Password=password).first()
         if answer is None:
             return jsonify(
                 code=responseCode.FAIL,

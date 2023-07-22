@@ -84,5 +84,12 @@ def register():
 
 @views.route('/user/login/status', methods=['GET'])
 def GetStatus():
-    if not session.get(SESSION_USER_STATUS):
-        session[SESSION_USER_STATUS] = LoginStatus()
+    status = session.get(SESSION_USER_STATUS)
+    if not status:
+        status = LoginStatus()
+        session[SESSION_USER_STATUS] = status
+    return jsonify(
+        code=responseCode.SUCCESS,
+        message="",
+        data=status,
+    )

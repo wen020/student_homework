@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, session
-from .models import User, TagEnum
+from .models import User
 import json
 from . import db
 from . import responseCode

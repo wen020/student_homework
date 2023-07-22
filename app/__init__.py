@@ -1,11 +1,13 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 db = SQLAlchemy()
 
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
 
     class Config(object):
         SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:ggsddu@127.0.0.1:3306/student_homework'

@@ -19,9 +19,10 @@ class User(db.Model):
     IsLogin = db.Column('is_login', db.Boolean, doc='is_login')
     Password = db.Column('password', db.String(64), doc='password')
 
-    def __init__(self, userId, userName, userType, password):
+    def __init__(self, userId, userName, userType, password, isLogin=False):
         # self.Id = str(uuid.uuid4())
         self.UserId = userId
         self.UserName = userName
         self.UserType = userType
         self.Password = password
+        self.IsLogin = isLogin

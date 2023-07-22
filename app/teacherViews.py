@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, session
-from .models import HomeWork
+from .models import Homework
 from . import responseCode, PAGE_SIZE, SESSION_USER_STATUS
 
 teacherViews = Blueprint('teacherViews', __name__)
@@ -16,11 +16,11 @@ def getPageCount():
     userId = status.userId
     homeworkId = request.args.get("homeworkId")
     homeworkTitle = request.args.get("homeworkTitle")
-    paginate_obj = HomeWork.query.filter(HomeWork.TeacherId == userId)
+    paginate_obj = Homework.query.filter(Homework.TeacherId == userId)
     if homeworkId:
-        paginate_obj = paginate_obj.filter(HomeWork.HomeworkId==homeworkId)
+        paginate_obj = paginate_obj.filter(Homework.HomeworkId==homeworkId)
     if homeworkTitle:
-        paginate_obj = paginate_obj.filter(HomeWork.HomeworkId.contains(homeworkTitle))
+        paginate_obj = paginate_obj.filter(Homework.HomeworkId.contains(homeworkTitle))
     paginate_obj = paginate_obj.paginate(page=1, per_page=PAGE_SIZE, error_out=False)  # 第一页，每页20条数据。 默认第一页。
     # 参数：error_out 设为True表示页数不是int或超过总页数时,会报错,并返回404状态码。 默认True
     # user_list = paginate_obj.items
@@ -44,11 +44,11 @@ def getPage(index):
     userId = status.userId
     homeworkId = request.args.get("homeworkId")
     homeworkTitle = request.args.get("homeworkTitle")
-    paginate_obj = HomeWork.query.filter(HomeWork.TeacherId == userId)
+    paginate_obj = Homework.query.filter(Homework.TeacherId == userId)
     if homeworkId:
-        paginate_obj = paginate_obj.filter(HomeWork.HomeworkId==homeworkId)
+        paginate_obj = paginate_obj.filter(Homework.HomeworkId==homeworkId)
     if homeworkTitle:
-        paginate_obj = paginate_obj.filter(HomeWork.HomeworkId.contains(homeworkTitle))
+        paginate_obj = paginate_obj.filter(Homework.HomeworkId.contains(homeworkTitle))
     paginate_obj = paginate_obj.paginate(page=index, per_page=PAGE_SIZE, error_out=False)  # 第一页，每页20条数据。 默认第一页。
     # 参数：error_out 设为True表示页数不是int或超过总页数时,会报错,并返回404状态码。 默认True
     homework_list = paginate_obj.items

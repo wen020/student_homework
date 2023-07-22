@@ -91,8 +91,8 @@ def GetStatus():
     return jsonify(
         code=responseCode.SUCCESS,
         message="",
-        data={"userId": status.UserId,
-                      "username": status.UserName,
-                      "userType": status.UserType,
-                      "loggedIn": status.IsLogin},
+        data={"userId": status.userId,
+                      "username": status.userName,
+                      "userType": status.userType,
+                      "loggedIn": status.loggedIn},
     )

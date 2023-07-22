@@ -37,13 +37,13 @@ def login():
         else:
             answer.IsLogin = True
             db.session.commit()
-            session[SESSION_USER_STATUS] = LoginStatus(loggedIn=answer.IsLogin, userId=answer.UserId, username=answer.UserName, userType=userType)
+            session[SESSION_USER_STATUS] = LoginStatus(loggedIn=answer.IsLogin, userId=answer.UserId, username=answer.UserName, userType=int(userType))
             return jsonify(
                 code=responseCode.SUCCESS,
                 message="",
                 data={"userId": answer.UserId,
                       "username": answer.UserName,
-                      "userType": userType,
+                      "userType": answer.UserType,
                       "loggedIn": answer.IsLogin},
             )
     except Exception as e:

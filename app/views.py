@@ -21,13 +21,14 @@ class LoginStatus:
 def login():
     try:
         data = request.get_data()
-        print(data)
         data = json.loads(data)
+        print(data)
         userId = data['userId']
         password = data['password']
         userType = data['userType']
         answer = User.query.filter_by(UserId=userId, Password=password).first()
         if answer is None:
+            print("{} Record not find!".format(userId))
             return jsonify(
                 code=responseCode.FAIL,
                 message="Record not find!",

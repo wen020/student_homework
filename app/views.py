@@ -6,6 +6,16 @@ from . import responseCode
 
 views = Blueprint('views', __name__)
 
+SESSION_USER_STATUS = "user_status"
+
+
+class LoginStatus:
+    def __init__(self, loggedIn=None, userId=None, username=None, userType=None):
+        self.loggedIn = loggedIn
+        self.userId = userId
+        self.username = username
+        self.userType = userType
+
 
 @views.route('/user/login', methods=['POST'])
 def login():
@@ -27,11 +37,12 @@ def login():
         else:
             answer.IsLogin = True
             db.session.commit()
+            session[SESSION_USER_STATUS] = LoginStatus(loggedIn=answer.IsLogin, userId=answer.UserId, username=answer.UserName, userType=userType)
             return jsonify(
                 code=responseCode.SUCCESS,
                 message="",
-                data={"userId": answer.id,
-                      "username": answer.teacher_name,
+                data={"userId": answer.UserId,
+                      "username": answer.UserName,
                       "userType": userType,
                       "loggedIn": answer.IsLogin},
             )
@@ -70,11 +81,8 @@ def register():
             data={},
         )
 
-class LoginStatus:
-    def __init__(self):
-        pass
+
 @views.route('/user/login/status', methods=['GET'])
 def GetStatus():
-    SESSION_USER_STATUS = "user_status"
     if not session.get(SESSION_USER_STATUS):
         session[SESSION_USER_STATUS] = LoginStatus()

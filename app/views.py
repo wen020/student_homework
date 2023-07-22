@@ -2,7 +2,7 @@ from flask import Blueprint, request, Response, make_response, jsonify
 from .models import Teacher
 import json
 from . import db
-import responseCode
+from . import responseCode
 
 views = Blueprint('views', __name__)
 

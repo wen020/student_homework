@@ -3,7 +3,6 @@ from .models import User
 import json
 from . import db
 from . import responseCode
-from flask_session import Session
 
 views = Blueprint('views', __name__)
 
@@ -77,5 +76,5 @@ class LoginStatus:
 @views.route('/user/login/status', methods=['GET'])
 def GetStatus():
     SESSION_USER_STATUS = "user_status"
-    if not Session.get(SESSION_USER_STATUS):
-        Session[SESSION_USER_STATUS] = LoginStatus()
+    if not session.get(SESSION_USER_STATUS):
+        session[SESSION_USER_STATUS] = LoginStatus()

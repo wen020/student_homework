@@ -24,4 +24,4 @@ class User(db.Model):
         self.UserId = userId
         self.UserName = userName
         self.UserType = userType
-        self.password = password
+        self.Password = password

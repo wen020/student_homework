@@ -4,8 +4,8 @@ from flask_cors import CORS
 from flask_session import Session
 
 db = SQLAlchemy()
-
-
+PAGE_SIZE = 10
+SESSION_USER_STATUS = "user_status"
 def create_app():
     app = Flask(__name__)
     app.config["SESSION_PERMANENT"] = False
@@ -25,8 +25,12 @@ def create_app():
     app.config.from_object(Config)
     db.init_app(app)
 
-    from .views import views
-    app.register_blueprint(views, url_prefix='/')
+    from .userViews import userViews
+    from .studentViews import studentViews
+    from .teacherViews import teacherViews
+    app.register_blueprint(userViews, url_prefix='/user')
+    app.register_blueprint(studentViews, url_prefix='/student')
+    app.register_blueprint(teacherViews, url_prefix='/teacher')
     with app.app_context():
         db.create_all()
 

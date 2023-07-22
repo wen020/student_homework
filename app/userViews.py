@@ -1,12 +1,9 @@
 from flask import Blueprint, request, jsonify, session
 from .models import User
 import json
-from . import db
-from . import responseCode
+from . import db, responseCode, SESSION_USER_STATUS
 
-views = Blueprint('views', __name__)
-
-SESSION_USER_STATUS = "user_status"
+userViews = Blueprint('userViews', __name__)
 
 
 class LoginStatus:
@@ -17,7 +14,7 @@ class LoginStatus:
         self.userType = userType
 
 
-@views.route('/user/login', methods=['POST'])
+@userViews.route('/login', methods=['POST'])
 def login():
     try:
         data = request.get_data()
@@ -55,7 +52,7 @@ def login():
         )
 
 
-@views.route('/user/register', methods=['POST'])
+@userViews.route('/register', methods=['POST'])
 def register():
     try:
         data = request.get_data()
@@ -82,7 +79,7 @@ def register():
         )
 
 
-@views.route('/user/login/status', methods=['GET'])
+@userViews.route('/login/status', methods=['GET'])
 def getStatus():
     status = session.get(SESSION_USER_STATUS)
     if not status:
@@ -97,7 +94,7 @@ def getStatus():
                       "loggedIn": status.loggedIn},
     )
 
-@views.route('user/logout', methods=['GET'])
+@userViews.route('/logout', methods=['GET'])
 def logout():
     session[SESSION_USER_STATUS] = None
     return jsonify(

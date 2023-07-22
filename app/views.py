@@ -36,7 +36,7 @@ def login():
 
 
 @views.route('/user/register', methods=['POST'])
-def login():
+def register():
     data = request.get_data()
     print(data)
     data = json.loads(data)

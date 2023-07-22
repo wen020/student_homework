@@ -26,7 +26,7 @@ def login():
         userId = data['userId']
         password = data['password']
         userType = data['userType']
-        answer = User.query.filter_by(UserId=userId, Password=password, UserType=TagEnum(userType)).first()
+        answer = User.query.filter_by(UserId=userId, Password=password, UserType=int(userType)).first()
         if answer is None:
             print("{} Record not find!".format(userId))
             return jsonify(

@@ -4,7 +4,7 @@ import enum
 from sqlalchemy import Enum
 
 
-class TagEnum(enum.Enum):
+class UserType(enum.Enum):
     student = 1
     teacher = 2
 
@@ -15,7 +15,7 @@ class User(db.Model):
     # Id = db.Column('id', db.String(64), primary_key=True, doc='id')
     UserId = db.Column('id', db.String(64), primary_key=True, doc='user_id')
     UserName = db.Column('user_name', db.String(64), doc='user_name')
-    UserType = db.Column('user_type', Enum(TagEnum), doc='user_type')
+    UserType = db.Column('user_type', db.Integer, doc='user_type', default=UserType.student)
     IsLogin = db.Column('is_login', db.Boolean, doc='is_login')
     Password = db.Column('password', db.String(64), doc='password')
 

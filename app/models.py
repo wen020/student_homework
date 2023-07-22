@@ -8,6 +8,7 @@ class Teacher(db.Model):
     teacher_name = db.Column('teacher_name', db.String(64), doc='teacher_name')
     password = db.Column('password', db.String(64), doc='password')
 
-    def __init__(self, name, password):
+    def __init__(self, id, name, password):
+        self.id = id
         self.teacher_name = name
         self.password = password

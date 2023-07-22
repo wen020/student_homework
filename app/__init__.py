@@ -5,7 +5,7 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
     class Config(object):
-        SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:ggsddu@8.142.83.101:3306/student_homework'
+        SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:ggsddu@127.0.0.1:3306/student_homework'
         SQLALCHEMY_TRACK_MODIFICATIONS = False
         SQLALCHEMY_ECHO = True
 

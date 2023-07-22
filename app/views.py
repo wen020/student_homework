@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, session
-from .models import User
+from .models import User, TagEnum
 import json
 from . import db
 from . import responseCode
@@ -26,7 +26,7 @@ def login():
         userId = data['userId']
         password = data['password']
         userType = data['userType']
-        answer = User.query.filter_by(UserId=userId, Password=password).first()
+        answer = User.query.filter_by(UserId=userId, Password=password, UserType=TagEnum(userType)).first()
         if answer is None:
             print("{} Record not find!".format(userId))
             return jsonify(
@@ -43,7 +43,7 @@ def login():
                 message="",
                 data={"userId": answer.UserId,
                       "username": answer.UserName,
-                      "userType": answer.UserType,
+                      "userType": int(answer.UserType),
                       "loggedIn": answer.IsLogin},
             )
     except Exception as e:

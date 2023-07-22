@@ -29,7 +29,7 @@ def login():
             code=responseCode.SUCCESS,
             message="",
             data={"userId": answer.id,
-                  "username": answer.teacher_nam,
+                  "username": answer.teacher_name,
                   "userType": 2,
                   "loggedIn": True},
         )

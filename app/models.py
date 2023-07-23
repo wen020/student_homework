@@ -10,7 +10,7 @@ class UserType(enum.Enum):
 
 
 class User(db.Model):
-    __tablename__ = 'Users'
+    __tablename__ = 'users'
 
     # Id = db.Column('id', db.String(64), primary_key=True, doc='id')
     UserId = db.Column('id', db.String(64), primary_key=True, doc='user_id')

@@ -358,7 +358,7 @@ def updateSubmittedHomework():
                     message="老师已点评，不能更新作业!",
                     data={},
                 )
-            answer.update(
+            StudentHomework.query.filter_by(StudentHomeworkId=studentHomeworkId).update(
                 {'Title': title, 'Content': content})
             db.session.commit()
             return jsonify(

@@ -264,3 +264,64 @@ def getSubmittedPage(index):
             message="INTERNAL_SERVER_ERROR!",
             data={},
         )
+
+@studentViews.route('/submitted/<id>', methods=['GET'])
+def getHomework(id):
+    try:
+        status = session.get(SESSION_USER_STATUS)
+        if not status:
+            return jsonify(
+                code=responseCode.NOT_LOGGED_IN,
+                message="NOT_LOGGED_IN!",
+                data={},
+            )
+        answer = StudentHomework.query.filter_by(HomeworkId=id).first()
+        if answer is None:
+            print("{} Record not find!".format(id))
+            return jsonify(
+                code=responseCode.FAIL,
+                message="Record not find!",
+                data={},
+            )
+        else:
+            homework = Homework.query.filter_by(HomeworkId=answer.HomeworkId).first()
+            if homework is None:
+                print("{} Record not find!".format(answer.HomeworkId))
+                return jsonify(
+                    code=responseCode.FAIL,
+                    message="Record not find!",
+                    data={},
+                )
+            teacher = User.query.filter_by(UserId=homework.TeacherId).first()
+            if teacher is None:
+                print("{} Record not find!".format(homework.TeacherId))
+                return jsonify(
+                    code=responseCode.FAIL,
+                    message="Record not find!",
+                    data={},
+                )
+
+            return jsonify(
+                code=responseCode.SUCCESS,
+                message="",
+                data={
+                "studentHomeworkId": answer.StudentHomeworkId,
+                "studentId": answer.StudentId,
+                "studentName": status.username,
+                "homeworkId": answer.HomeworkId,
+                "homeworkTitle": homework.HomeworkTitle,
+                "homeworkContent": homework.HomeworkContent,
+                "teacherId": teacher.UserId,
+                "teacherName": teacher.UserName,
+                "title": answer.Title,
+                "content": answer.Content,
+                "teacherComment": answer.TeacherComment,
+            },
+            )
+    except Exception as e:
+        print("error: ", e)
+        return jsonify(
+            code=responseCode.INTERNAL_SERVER_ERROR,
+            message="INTERNAL_SERVER_ERROR!",
+            data={},
+        )

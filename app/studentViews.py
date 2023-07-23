@@ -342,7 +342,8 @@ def updateSubmittedHomework():
         print(data)
         title = data['title']
         content = data['content']
-        answer = StudentHomework.query.filter_by(HomeworkId=id).first()
+        studentHomeworkId = data['studentHomeworkId']
+        answer = StudentHomework.query.filter_by(StudentHomeworkId=studentHomeworkId).first()
         if answer is None:
             print("{} Record not find!".format(id))
             return jsonify(

@@ -62,7 +62,7 @@ def register():
         userName = data['username']
         password = data['password']
         userType = data['userType']
-        record = User(userId, userName, userType, password)
+        record = User(userId, userName, int(userType), password)
         db.session.add(record)
         db.session.commit()
         return jsonify(

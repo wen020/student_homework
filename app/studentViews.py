@@ -18,7 +18,7 @@ def getPageCount():
         userId = status.userId
         homeworkId = request.args.get("homeworkId")
         homeworkTitle = request.args.get("homeworkTitle")
-        paginate_obj = Homework.query.filter(Homework.TeacherId == userId)
+        paginate_obj = Homework.query
         if homeworkId:
             paginate_obj = paginate_obj.filter(Homework.HomeworkId == homeworkId)
         if homeworkTitle:
@@ -55,7 +55,7 @@ def getPage(index):
         userId = status.userId
         homeworkId = request.args.get("homeworkId")
         homeworkTitle = request.args.get("homeworkTitle")
-        paginate_obj = Homework.query.filter(Homework.TeacherId == userId)
+        paginate_obj = Homework.query
         if homeworkId:
             paginate_obj = paginate_obj.filter(Homework.HomeworkId == homeworkId)
         if homeworkTitle:

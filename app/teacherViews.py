@@ -159,3 +159,59 @@ def getHomework(id):
             message="INTERNAL_SERVER_ERROR!",
             data={},
         )
+
+@teacherViews.route('/homework', methods=['PUT'])
+def updateHomework():
+    try:
+        status = session.get(SESSION_USER_STATUS)
+        if not status:
+            return jsonify(
+                code=responseCode.NOT_LOGGED_IN,
+                message="NOT_LOGGED_IN!",
+                data={},
+            )
+        data = request.get_data()
+        data = json.loads(data)
+        print(data)
+        homeworkId = data['homeworkId']
+        homeworkTitle = data['homeworkTitle']
+        homeworkContent = data['homeworkContent']
+        Homework.query.filter(Homework.HomeworkId == homeworkId).update({'homework_title': homeworkTitle, 'homework_content':homeworkContent})
+        db.session.commit()
+        return jsonify(
+            code=responseCode.SUCCESS,
+            message="",
+            data={},
+        )
+    except Exception as e:
+        print(e)
+        return jsonify(
+            code=responseCode.INTERNAL_SERVER_ERROR,
+            message="INTERNAL_SERVER_ERROR!",
+            data={},
+        )
+
+@teacherViews.route('/homework/<id>', methods=['DELETE'])
+def delHomework(id):
+    try:
+        status = session.get(SESSION_USER_STATUS)
+        if not status:
+            return jsonify(
+                code=responseCode.NOT_LOGGED_IN,
+                message="NOT_LOGGED_IN!",
+                data={},
+            )
+        Homework.query.filter_by(HomeworkId=id).delete()
+        db.session.commit()
+        return jsonify(
+            code=responseCode.SUCCESS,
+            message="",
+            data={},
+        )
+    except Exception as e:
+        print(e)
+        return jsonify(
+            code=responseCode.INTERNAL_SERVER_ERROR,
+            message="INTERNAL_SERVER_ERROR!",
+            data={},
+        )

@@ -49,7 +49,7 @@ def getPage(index):
         paginate_obj = paginate_obj.filter(Homework.HomeworkId==homeworkId)
     if homeworkTitle:
         paginate_obj = paginate_obj.filter(Homework.HomeworkId.contains(homeworkTitle))
-    paginate_obj = paginate_obj.paginate(page=index, per_page=PAGE_SIZE, error_out=False)  # 第一页，每页20条数据。 默认第一页。
+    paginate_obj = paginate_obj.paginate(page=int(index), per_page=PAGE_SIZE, error_out=False)  # 第一页，每页20条数据。 默认第一页。
     # 参数：error_out 设为True表示页数不是int或超过总页数时,会报错,并返回404状态码。 默认True
     homework_list = paginate_obj.items
     # 获取总页数

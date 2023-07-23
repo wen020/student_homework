@@ -59,7 +59,6 @@
                     </el-table-column>
                 </el-table>
             </div>
-
             <el-dialog :visible.sync="editing" title="编辑" width="50%">
                 <el-form :model="entityForm" label-width="82px" ref="form">
                     <el-form-item label="作业编号">
@@ -76,6 +75,19 @@
                     </el-form-item>
                     <el-form-item label="提交的内容">
                         <el-input type="textarea" v-model="entityForm.content"></el-input>
+                    </el-form-item>
+                    <el-form-item label="上传文件:" prop="pdf">
+                      <el-upload
+                        class="upload-demo"
+                        ref="upload"
+                        action<!-- 这里比填,异步时写后端接口,就可以,我们不用,所以不谢-->
+                        :http-request="httpRequest"<!--覆盖默认的上传行为，可以自定义上传的实现-->
+                        :before-upload="beforeUpload"<!--这是上传前的处理方法-->
+                        :on-exceed="handleExceed"<!--文件超出个数限制时的钩子-->
+                        :limit="1">
+                        <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传.pdf文件，且不超过5M</div>
+                      </el-upload>
                     </el-form-item>
                 </el-form>
                 <span class="dialog-footer" slot="footer">
@@ -107,6 +119,31 @@
             };
         },
         methods: {
+            httpRequest(option) {
+                this.entityForm.fileList.push(option)
+            },
+            // 上传前处理
+            beforeUpload(file) {
+                let fileSize = file.size
+                const FIVE_M= 5*1024*1024;
+                //大于5M，不允许上传
+                if(fileSize>FIVE_M){
+                    this.$message.error("最大上传5M")
+                    return  false
+                }
+                //判断文件类型，必须是xlsx格式
+                let fileName = file.name
+                let reg = /^.+(\.pdf)$/
+                if(!reg.test(fileName)){
+                    this.$message.error("只能上传pdf!")
+                    return false
+                }
+                return true
+            },
+            // 文件数量过多时提醒
+            handleExceed() {
+                this.$message({ type: 'error', message: '最多支持1个附件上传' })
+            },
             query() {
                 homeworkApi.getPageCount(this.queryForm.homeworkId, this.queryForm.homeworkTitle).then(res => {
                     this.pageCount = res;

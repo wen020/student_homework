@@ -4,7 +4,7 @@ from flask_cors import CORS
 from flask_session import Session
 
 db = SQLAlchemy()
-PAGE_SIZE = 10
+PAGE_SIZE = 7
 SESSION_USER_STATUS = "user_status"
 def create_app():
     app = Flask(__name__)

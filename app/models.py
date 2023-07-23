@@ -50,7 +50,6 @@ class StudentHomework(db.Model):
     StudentHomeworkId = db.Column('student_homework_id', db.String(64), primary_key=True, doc='student_homework_id')
     StudentId = db.Column('student_id', db.String(64), doc='student_id')
     HomeworkId = db.Column('homework_id', db.String(128), doc='homework_id')
-    HomeworkTitle = db.Column('homework_title', db.String(128), doc='homework_title')
     Title = db.Column('title', db.String(1024), doc='title')
     Content = db.Column('content', db.String(1024), doc='content')
     TeacherComment = db.Column('teacher_comment', db.String(1024), doc='teacher_comment')

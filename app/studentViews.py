@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, session
-from .models import Homework, StudentHomework
+from .models import Homework, StudentHomework, User
 import json
 from . import db, responseCode, SESSION_USER_STATUS, PAGE_SIZE
 
@@ -223,15 +223,31 @@ def getSubmittedPage(index):
         # 参数：error_out 设为True表示页数不是int或超过总页数时,会报错,并返回404状态码。 默认True
         homework_list = []
         for data in paginate_obj.items:
+            homework = Homework.query.filter_by(HomeworkId=data.HomeworkId).first()
+            if homework is None:
+                print("{} Record not find!".format(data.HomeworkId))
+                return jsonify(
+                    code=responseCode.FAIL,
+                    message="Record not find!",
+                    data={},
+                )
+            teacher = User.query.filter_by(UserId=homework.TeacherId).first()
+            if teacher is None:
+                print("{} Record not find!".format(homework.TeacherId))
+                return jsonify(
+                    code=responseCode.FAIL,
+                    message="Record not find!",
+                    data={},
+                )
             homework_list.append({
                 "studentHomeworkId": data.StudentHomeworkId,
                 "studentId": data.StudentId,
                 "studentName": status.username,
                 "homeworkId": data.HomeworkId,
-                "homeworkTitle": data.HomeworkTitle,
-                "homeworkContent": data.HomeworkContent,
-                "teacherId": "",
-                "teacherName": "",
+                "homeworkTitle": homework.HomeworkTitle,
+                "homeworkContent": homework.HomeworkContent,
+                "teacherId": teacher.UserId,
+                "teacherName": teacher.UserName,
                 "title": data.Title,
                 "content": data.Content,
                 "teacherComment": data.TeacherComment,

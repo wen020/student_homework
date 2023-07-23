@@ -1,7 +1,7 @@
 import json
 
 from flask import Blueprint, request, jsonify, session
-from .models import Homework, StudentHomework
+from .models import Homework, StudentHomework, User
 from . import responseCode, PAGE_SIZE, SESSION_USER_STATUS, db
 
 teacherViews = Blueprint('teacherViews', __name__)

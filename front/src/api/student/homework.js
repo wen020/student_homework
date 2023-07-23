@@ -15,8 +15,8 @@ export const submitHomework = studentHomework => {
     params.append('content', this.importForm.content)
     return axios.post("/student/homework/", studentHomework, {
 	        	headers: {'content-type': 'multipart/form-data'}
-	        });
-}
+	        })
+};
 
 export const getHomework = homeworkId => axios.get("/student/homework/" + homeworkId);
 

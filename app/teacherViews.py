@@ -36,7 +36,7 @@ def getPageCount():
             data=total_page,
         )
     except Exception as e:
-        print(e)
+        print("error: ", e)
         return jsonify(
             code=responseCode.INTERNAL_SERVER_ERROR,
             message="INTERNAL_SERVER_ERROR!",
@@ -81,7 +81,7 @@ def getPage(index):
             data=homework_list,
         )
     except Exception as e:
-        print(e)
+        print("error: ", e)
         return jsonify(
             code=responseCode.INTERNAL_SERVER_ERROR,
             message="INTERNAL_SERVER_ERROR!",
@@ -114,7 +114,7 @@ def addHomework():
             data={},
         )
     except Exception as e:
-        print(e)
+        print("error: ", e)
         return jsonify(
             code=responseCode.INTERNAL_SERVER_ERROR,
             message="INTERNAL_SERVER_ERROR!",
@@ -153,7 +153,7 @@ def getHomework(id):
                 },
             )
     except Exception as e:
-        print(e)
+        print("error: ", e)
         return jsonify(
             code=responseCode.INTERNAL_SERVER_ERROR,
             message="INTERNAL_SERVER_ERROR!",
@@ -186,7 +186,7 @@ def updateHomework():
             data={},
         )
     except Exception as e:
-        print(e)
+        print("error: ", e)
         return jsonify(
             code=responseCode.INTERNAL_SERVER_ERROR,
             message="INTERNAL_SERVER_ERROR!",
@@ -212,7 +212,7 @@ def delHomework(id):
             data={},
         )
     except Exception as e:
-        print(e)
+        print("error: ", e)
         return jsonify(
             code=responseCode.INTERNAL_SERVER_ERROR,
             message="INTERNAL_SERVER_ERROR!",

@@ -328,7 +328,7 @@ def getSubmittedHomework(id):
 
 
 @studentViews.route('/submitted', methods=['PUT'])
-def updateSubmittedHomework(id):
+def updateSubmittedHomework():
     try:
         status = session.get(SESSION_USER_STATUS)
         if not status:

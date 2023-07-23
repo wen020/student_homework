@@ -148,13 +148,13 @@ def addHomework():
         db.session.commit()
         return jsonify(
             code=responseCode.SUCCESS,
-            message="",
+            message="提交作业成功",
             data={},
         )
     except Exception as e:
         print(e)
         return jsonify(
             code=responseCode.INTERNAL_SERVER_ERROR,
-            message="INTERNAL_SERVER_ERROR!",
+            message="提交作业失败!",
             data={},
         )

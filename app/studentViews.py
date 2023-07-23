@@ -325,3 +325,50 @@ def getSubmittedHomework(id):
             message="INTERNAL_SERVER_ERROR!",
             data={},
         )
+
+
+@studentViews.route('/submitted/<id>', methods=['PUT'])
+def updateSubmittedHomework(id):
+    try:
+        status = session.get(SESSION_USER_STATUS)
+        if not status:
+            return jsonify(
+                code=responseCode.NOT_LOGGED_IN,
+                message="NOT_LOGGED_IN!",
+                data={},
+            )
+        data = request.get_data()
+        data = json.loads(data)
+        print(data)
+        title = data['title']
+        content = data['content']
+        answer = StudentHomework.query.filter_by(HomeworkId=id).first()
+        if answer is None:
+            print("{} Record not find!".format(id))
+            return jsonify(
+                code=responseCode.FAIL,
+                message="Record not find!",
+                data={},
+            )
+        else:
+            if answer.Content:
+                return jsonify(
+                    code=responseCode.FAIL,
+                    message="老师已点评，不能更新作业!",
+                    data={},
+                )
+            answer.update(
+                {'Title': title, 'Content': content})
+            db.session.commit()
+            return jsonify(
+                code=responseCode.SUCCESS,
+                message="更新作业成功",
+                data={},
+            )
+    except Exception as e:
+        print("error: ", e)
+        return jsonify(
+            code=responseCode.INTERNAL_SERVER_ERROR,
+            message="INTERNAL_SERVER_ERROR!",
+            data={},
+        )

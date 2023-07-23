@@ -160,6 +160,7 @@ def getHomework(id):
             data={},
         )
 
+
 @teacherViews.route('/homework', methods=['PUT'])
 def updateHomework():
     try:
@@ -176,7 +177,8 @@ def updateHomework():
         homeworkId = data['homeworkId']
         homeworkTitle = data['homeworkTitle']
         homeworkContent = data['homeworkContent']
-        Homework.query.filter(Homework.HomeworkId == homeworkId).update({'homework_title': homeworkTitle, 'homework_content':homeworkContent})
+        Homework.query.filter(Homework.HomeworkId == homeworkId).update(
+            {'HomeworkTitle': homeworkTitle, 'HomeworkContent': homeworkContent})
         db.session.commit()
         return jsonify(
             code=responseCode.SUCCESS,
@@ -190,6 +192,7 @@ def updateHomework():
             message="INTERNAL_SERVER_ERROR!",
             data={},
         )
+
 
 @teacherViews.route('/homework/<id>', methods=['DELETE'])
 def delHomework(id):

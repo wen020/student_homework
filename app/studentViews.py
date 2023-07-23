@@ -397,6 +397,7 @@ def getCommentedPageCount():
         homeworkId = request.args.get("homeworkId")
         homeworkTitle = request.args.get("homeworkTitle")
         paginate_obj = StudentHomework.query.filter(StudentHomework.StudentId == userId)
+        paginate_obj = paginate_obj.filter(StudentHomework.TeacherComment.isnot(None))
         if homeworkId:
             paginate_obj = paginate_obj.filter(StudentHomework.HomeworkId == homeworkId)
         if homeworkTitle:
@@ -434,6 +435,7 @@ def getCubmittedPage(index):
         homeworkId = request.args.get("homeworkId")
         homeworkTitle = request.args.get("homeworkTitle")
         paginate_obj = StudentHomework.query.filter(StudentHomework.StudentId == userId)
+        paginate_obj = paginate_obj.filter(StudentHomework.TeacherComment.isnot(None))
         if homeworkId:
             paginate_obj = paginate_obj.filter(StudentHomework.HomeworkId == homeworkId)
         if homeworkTitle:

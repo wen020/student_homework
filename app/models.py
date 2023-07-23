@@ -58,7 +58,7 @@ class StudentHomework(db.Model):
     Score = db.Column('score', db.Integer, doc='score', default=0)
     Appendix = db.Column('appendix', db.String(1024), doc='appendix')
 
-    def __init__(self, studentHomeworkId, studentId, studentName, teacherId, homeworkId, title, content, teacherComment="", score=0, appendix=None):
+    def __init__(self, studentHomeworkId, studentId, studentName, teacherId, homeworkId, title, content, teacherComment=None, score=0, appendix=None):
         if not studentHomeworkId:
             studentHomeworkId = str(uuid.uuid4())
         self.StudentHomeworkId = studentHomeworkId

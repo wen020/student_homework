@@ -1,6 +1,7 @@
 import * as axios from "@/common/myAxios";
+import {put} from "@/common/myAxios";
 
-export const updateStudentHomework = studentHomework => axios.put("/teacher/submitted/", studentHomework);
+export const updateStudentHomework = studentHomework => put("/teacher/submitted/", studentHomework);
 
 export const getStudentHomework = studentHomeworkId => axios.pureGet("/teacher/submitted/" + studentHomeworkId);
 

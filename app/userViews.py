@@ -82,24 +82,40 @@ def register():
 
 @userViews.route('/login/status', methods=['GET'])
 def getStatus():
-    status = session.get(SESSION_USER_STATUS)
-    if not status:
-        status = LoginStatus()
-        session[SESSION_USER_STATUS] = status
-    return jsonify(
-        code=responseCode.SUCCESS,
-        message="",
-        data={"userId": status.userId,
-                      "username": status.username,
-                      "userType": status.userType,
-                      "loggedIn": status.loggedIn},
-    )
+    try:
+        status = session.get(SESSION_USER_STATUS)
+        if not status:
+            status = LoginStatus()
+            session[SESSION_USER_STATUS] = status
+        return jsonify(
+            code=responseCode.SUCCESS,
+            message="",
+            data={"userId": status.userId,
+                          "username": status.username,
+                          "userType": status.userType,
+                          "loggedIn": status.loggedIn},
+        )
+    except Exception as e:
+        print(e)
+        return jsonify(
+            code=responseCode.INTERNAL_SERVER_ERROR,
+            message="INTERNAL_SERVER_ERROR!",
+            data={},
+        )
 
 @userViews.route('/logout', methods=['GET'])
 def logout():
-    session[SESSION_USER_STATUS] = None
-    return jsonify(
-        code=responseCode.SUCCESS,
-        message="注销成功",
-        data={},
-    )
+    try:
+        session[SESSION_USER_STATUS] = None
+        return jsonify(
+            code=responseCode.SUCCESS,
+            message="注销成功",
+            data={},
+        )
+    except Exception as e:
+        print(e)
+        return jsonify(
+            code=responseCode.INTERNAL_SERVER_ERROR,
+            message="INTERNAL_SERVER_ERROR!",
+            data={},
+        )

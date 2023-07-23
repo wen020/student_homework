@@ -160,7 +160,7 @@ def addHomework():
         )
 
 @studentViews.route('/submitted/page/count', methods=['GET'])
-def getPageCount():
+def getSubmittedPageCount():
     try:
         status = session.get(SESSION_USER_STATUS)
         if not status:
@@ -197,7 +197,7 @@ def getPageCount():
 
 
 @studentViews.route('/submitted/page/<index>', methods=['GET'])
-def getPage(index):
+def getSubmittedPage(index):
     try:
         status = session.get(SESSION_USER_STATUS)
         if not status:

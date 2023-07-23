@@ -145,7 +145,16 @@ def addHomework():
         homeworkTitle = data['homeworkTitle']
         studentTitle = data['title']
         studentContent = data['content']
-        record = StudentHomework(None, userId, homeworkId, studentTitle, studentContent)
+        teacherId = data['teacherId']
+        student = User.query.filter_by(UserId=userId).first()
+        if student is None:
+            print("{} Record not find!".format(userId))
+            return jsonify(
+                code=responseCode.FAIL,
+                message="Record not find!",
+                data={},
+            )
+        record = StudentHomework(None, userId, student.UserName, teacherId, homeworkId, studentTitle, studentContent)
         db.session.add(record)
         db.session.commit()
         return jsonify(

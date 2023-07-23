@@ -6,6 +6,7 @@ from . import responseCode, PAGE_SIZE, SESSION_USER_STATUS, db
 
 teacherViews = Blueprint('teacherViews', __name__)
 
+
 @teacherViews.route('/homework/page/count', methods=['GET'])
 def getPageCount():
     try:
@@ -21,7 +22,7 @@ def getPageCount():
         homeworkTitle = request.args.get("homeworkTitle")
         paginate_obj = Homework.query.filter(Homework.TeacherId == userId)
         if homeworkId:
-            paginate_obj = paginate_obj.filter(Homework.HomeworkId==homeworkId)
+            paginate_obj = paginate_obj.filter(Homework.HomeworkId == homeworkId)
         if homeworkTitle:
             paginate_obj = paginate_obj.filter(Homework.HomeworkId.contains(homeworkTitle))
         paginate_obj = paginate_obj.paginate(page=1, per_page=PAGE_SIZE, error_out=False)  # 第一页，每页20条数据。 默认第一页。
@@ -30,10 +31,10 @@ def getPageCount():
         # 获取总页数
         total_page = paginate_obj.pages
         return jsonify(
-                code=responseCode.SUCCESS,
-                message="",
-                data=total_page,
-            )
+            code=responseCode.SUCCESS,
+            message="",
+            data=total_page,
+        )
     except Exception as e:
         print(e)
         return jsonify(
@@ -41,6 +42,7 @@ def getPageCount():
             message="INTERNAL_SERVER_ERROR!",
             data={},
         )
+
 
 @teacherViews.route('/homework/page/<index>', methods=['GET'])
 def getPage(index):
@@ -57,26 +59,27 @@ def getPage(index):
         homeworkTitle = request.args.get("homeworkTitle")
         paginate_obj = Homework.query.filter(Homework.TeacherId == userId)
         if homeworkId:
-            paginate_obj = paginate_obj.filter(Homework.HomeworkId==homeworkId)
+            paginate_obj = paginate_obj.filter(Homework.HomeworkId == homeworkId)
         if homeworkTitle:
             paginate_obj = paginate_obj.filter(Homework.HomeworkId.contains(homeworkTitle))
-        paginate_obj = paginate_obj.paginate(page=int(index), per_page=PAGE_SIZE, error_out=False)  # 第一页，每页20条数据。 默认第一页。
+        paginate_obj = paginate_obj.paginate(page=int(index), per_page=PAGE_SIZE,
+                                             error_out=False)  # 第一页，每页20条数据。 默认第一页。
         # 参数：error_out 设为True表示页数不是int或超过总页数时,会报错,并返回404状态码。 默认True
         homework_list = []
         for data in paginate_obj.items:
             homework_list.append({
-            "homeworkId":data.HomeworkId,
-            "teacherId":data.TeacherId,
-            "teacherName":status.username,
-            "homeworkTitle":data.HomeworkTitle,
-            "homeworkContent":data.HomeworkContent,
+                "homeworkId": data.HomeworkId,
+                "teacherId": data.TeacherId,
+                "teacherName": status.username,
+                "homeworkTitle": data.HomeworkTitle,
+                "homeworkContent": data.HomeworkContent,
             })
 
         return jsonify(
-                code=responseCode.SUCCESS,
-                message="",
-                data=homework_list,
-            )
+            code=responseCode.SUCCESS,
+            message="",
+            data=homework_list,
+        )
     except Exception as e:
         print(e)
         return jsonify(
@@ -84,6 +87,7 @@ def getPage(index):
             message="INTERNAL_SERVER_ERROR!",
             data={},
         )
+
 
 @teacherViews.route('/homework', methods=['POST'])
 def addHomework():
@@ -109,6 +113,45 @@ def addHomework():
             message="",
             data={},
         )
+    except Exception as e:
+        print(e)
+        return jsonify(
+            code=responseCode.INTERNAL_SERVER_ERROR,
+            message="INTERNAL_SERVER_ERROR!",
+            data={},
+        )
+
+
+@teacherViews.route('/homework/<id>', methods=['GET'])
+def getHomework(id):
+    try:
+        status = session.get(SESSION_USER_STATUS)
+        if not status:
+            return jsonify(
+                code=responseCode.NOT_LOGGED_IN,
+                message="NOT_LOGGED_IN!",
+                data={},
+            )
+        answer = Homework.query.filter_by(HomeworkId=id).first()
+        if answer is None:
+            print("{} Record not find!".format(id))
+            return jsonify(
+                code=responseCode.FAIL,
+                message="Record not find!",
+                data={},
+            )
+        else:
+            return jsonify(
+                code=responseCode.SUCCESS,
+                message="",
+                data={
+                    "homeworkId": answer.HomeworkId,
+                    "teacherId": answer.TeacherId,
+                    "teacherName": status.username,
+                    "homeworkTitle": answer.HomeworkTitle,
+                    "homeworkContent": answer.HomeworkContent,
+                },
+            )
     except Exception as e:
         print(e)
         return jsonify(

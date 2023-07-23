@@ -35,6 +35,7 @@ def login():
             answer.IsLogin = True
             db.session.commit()
             session[SESSION_USER_STATUS] = LoginStatus(loggedIn=answer.IsLogin, userId=answer.UserId, username=answer.UserName, userType=int(userType))
+            print(session[SESSION_USER_STATUS])
             return jsonify(
                 code=responseCode.SUCCESS,
                 message="",

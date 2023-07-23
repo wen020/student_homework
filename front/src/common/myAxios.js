@@ -149,7 +149,7 @@ export const del = function (url, params) {
 export const put = function (url, data) {
     return innerPut(url, data, {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
         }
     });
 };

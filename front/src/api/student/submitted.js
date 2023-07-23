@@ -1,9 +1,10 @@
 import * as axios from "@/common/myAxios";
 
-export const updateStudentHomework = studentHomework => axios.put("/student/submitted", studentHomework,
-      {headers:{
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-      }});
+export const updateStudentHomework = studentHomework => axios.put("/student/submitted", studentHomework,{
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+        }
+    });
 
 export const getStudentHomework = homeworkId => axios.get("/student/submitted/" + homeworkId);
 

@@ -124,7 +124,7 @@ def getHomework(id):
             data={},
         )
 
-@studentViews.route('/homework', methods=['POST'])
+@studentViews.route('/homework/', methods=['POST'])
 def addHomework():
     try:
         status = session.get(SESSION_USER_STATUS)

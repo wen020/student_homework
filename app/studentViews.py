@@ -224,11 +224,17 @@ def getSubmittedPage(index):
         homework_list = []
         for data in paginate_obj.items:
             homework_list.append({
+                "studentHomeworkId": data.StudentHomeworkId,
+                "studentId": data.StudentId,
+                "studentName": status.username,
                 "homeworkId": data.HomeworkId,
-                "teacherId": data.TeacherId,
-                "teacherName": status.username,
                 "homeworkTitle": data.HomeworkTitle,
                 "homeworkContent": data.HomeworkContent,
+                "teacherId": "",
+                "teacherName": "",
+                "title": data.Title,
+                "content": data.Content,
+                "teacherComment": data.TeacherComment,
             })
 
         return jsonify(

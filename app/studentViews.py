@@ -352,7 +352,7 @@ def updateSubmittedHomework():
                 data={},
             )
         else:
-            if answer.Content:
+            if answer.TeacherComment:
                 return jsonify(
                     code=responseCode.FAIL,
                     message="老师已点评，不能更新作业!",

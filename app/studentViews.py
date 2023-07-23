@@ -143,10 +143,9 @@ def addHomework():
         print(data)
         homeworkId = data['homeworkId']
         homeworkTitle = data['homeworkTitle']
-        homeworkContent = data['homeworkContent']
         studentTitle = data['title']
         studentContent = data['content']
-        record = StudentHomework(None, userId, homeworkId, homeworkTitle, studentTitle, studentContent)
+        record = StudentHomework(None, userId, homeworkId, studentTitle, studentContent)
         db.session.add(record)
         db.session.commit()
         return jsonify(

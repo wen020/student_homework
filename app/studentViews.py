@@ -85,3 +85,41 @@ def getPage(index):
             message="INTERNAL_SERVER_ERROR!",
             data={},
         )
+
+@studentViews.route('/homework/<id>', methods=['GET'])
+def getHomework(id):
+    try:
+        status = session.get(SESSION_USER_STATUS)
+        if not status:
+            return jsonify(
+                code=responseCode.NOT_LOGGED_IN,
+                message="NOT_LOGGED_IN!",
+                data={},
+            )
+        answer = Homework.query.filter_by(HomeworkId=id).first()
+        if answer is None:
+            print("{} Record not find!".format(id))
+            return jsonify(
+                code=responseCode.FAIL,
+                message="Record not find!",
+                data={},
+            )
+        else:
+            return jsonify(
+                code=responseCode.SUCCESS,
+                message="",
+                data={
+                    "homeworkId": answer.HomeworkId,
+                    "teacherId": answer.TeacherId,
+                    "teacherName": status.username,
+                    "homeworkTitle": answer.HomeworkTitle,
+                    "homeworkContent": answer.HomeworkContent,
+                },
+            )
+    except Exception as e:
+        print(e)
+        return jsonify(
+            code=responseCode.INTERNAL_SERVER_ERROR,
+            message="INTERNAL_SERVER_ERROR!",
+            data={},
+        )

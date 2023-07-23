@@ -266,7 +266,7 @@ def getSubmittedPage(index):
         )
 
 @studentViews.route('/submitted/<id>', methods=['GET'])
-def getHomework(id):
+def getSubmittedHomework(id):
     try:
         status = session.get(SESSION_USER_STATUS)
         if not status:

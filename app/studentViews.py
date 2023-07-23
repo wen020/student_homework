@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, session
-from .models import Homework
+from .models import Homework, StudentHomework
 import json
-from . import responseCode, SESSION_USER_STATUS, PAGE_SIZE
+from . import db, responseCode, SESSION_USER_STATUS, PAGE_SIZE
 
 studentViews = Blueprint('studentViews', __name__)
 
@@ -116,6 +116,41 @@ def getHomework(id):
                     "homeworkContent": answer.HomeworkContent,
                 },
             )
+    except Exception as e:
+        print(e)
+        return jsonify(
+            code=responseCode.INTERNAL_SERVER_ERROR,
+            message="INTERNAL_SERVER_ERROR!",
+            data={},
+        )
+
+@studentViews.route('/homework', methods=['POST'])
+def addHomework():
+    try:
+        status = session.get(SESSION_USER_STATUS)
+        if not status:
+            return jsonify(
+                code=responseCode.NOT_LOGGED_IN,
+                message="NOT_LOGGED_IN!",
+                data={},
+            )
+        userId = status.userId
+        data = request.get_data()
+        data = json.loads(data)
+        print(data)
+        homeworkId = data['homeworkId']
+        homeworkTitle = data['homeworkTitle']
+        homeworkContent = data['homeworkContent']
+        studentTitle = data['title']
+        studentContent = data['content']
+        record = StudentHomework(None,homeworkId, userId, homeworkId, studentTitle, studentContent)
+        db.session.add(record)
+        db.session.commit()
+        return jsonify(
+            code=responseCode.SUCCESS,
+            message="",
+            data={},
+        )
     except Exception as e:
         print(e)
         return jsonify(

@@ -5,6 +5,7 @@ from . import db, responseCode, SESSION_USER_STATUS, PAGE_SIZE
 
 studentViews = Blueprint('studentViews', __name__)
 
+
 @studentViews.route('/homework/page/count', methods=['GET'])
 def getPageCount():
     try:
@@ -86,6 +87,7 @@ def getPage(index):
             data={},
         )
 
+
 @studentViews.route('/homework/<id>', methods=['GET'])
 def getHomework(id):
     try:
@@ -124,6 +126,7 @@ def getHomework(id):
             data={},
         )
 
+
 @studentViews.route('/homework/', methods=['POST'])
 def addHomework():
     try:
@@ -143,7 +146,7 @@ def addHomework():
         homeworkContent = data['homeworkContent']
         studentTitle = data['title']
         studentContent = data['content']
-        record = StudentHomework(None,homeworkId, userId, homeworkId, homeworkTitle, studentTitle, studentContent)
+        record = StudentHomework(None, userId, homeworkId, homeworkTitle, studentTitle, studentContent)
         db.session.add(record)
         db.session.commit()
         return jsonify(
@@ -158,6 +161,7 @@ def addHomework():
             message="提交作业失败!",
             data={},
         )
+
 
 @studentViews.route('/submitted/page/count', methods=['GET'])
 def getSubmittedPageCount():

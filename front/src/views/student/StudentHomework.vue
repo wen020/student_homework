@@ -59,6 +59,7 @@
                     </el-table-column>
                 </el-table>
             </div>
+
             <el-dialog :visible.sync="editing" title="编辑" width="50%">
                 <el-form :model="entityForm" label-width="82px" ref="form">
                     <el-form-item label="作业编号">
